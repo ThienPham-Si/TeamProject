@@ -1,3 +1,6 @@
+<?php
+  include_once 'includes/dbh.inc.php'
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -43,7 +46,7 @@
       </button>
       <div class="collapse" id="orders-collapse">
         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a href="repair.html" class="link-dark rounded">New</a></li>
+          <li><a href="repair.php" class="link-dark rounded">New</a></li>
           <li><a href="#" class="link-dark rounded">Processing</a></li>
           <li><a href="#" class="link-dark rounded">Finished</a></li>
         </ul>
@@ -56,23 +59,33 @@
       </button>
       <div class="collapse" id="account-collapse">
         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a href="#" class="link-dark rounded">Profile</a></li>
+          <li><a href="login.php" class="link-dark rounded">Profile</a></li>
           <li><a href="#" class="link-dark rounded">Settings</a></li>
-          <li><a href="#" class="link-dark rounded">Sign out</a></li>
+          <li><a href="login.php" class="link-dark rounded">Sign out</a></li>
         </ul>
       </div>
     </li>
   </ul>
 </div>
-<!-- Mainpage -->
 <div id="content" class="content">
-  <div class="items">
-  <p>Hello World </p>
-  </div>
-</div>
+  <h1> Table test</h1>
+  <br />
+  <?php
+  $query = 'SELECT * FROM customers;';
+  $result = $conn->query($query);
+
+  if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "id: " . $row["id"]. " - Name: " . $row["first_name"]. " " . $row["last_name"]. "<br>";
+    }
+    } else {
+        echo "0 results";
+    }
+$conn->close();
 
 
-
+  ?>
 
     <script src="script.js" type="text/javascript">
     </script>
