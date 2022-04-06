@@ -21,7 +21,7 @@
       </button>
       <div class="collapse show" id="home-collapse">
         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a href="index.html" class="link-dark rounded">Overview</a></li>
+          <li><a href="index.php" class="link-dark rounded">Overview</a></li>
           <li><a href="#" class="link-dark rounded">Updates</a></li>
         </ul>
       </div>
@@ -43,7 +43,7 @@
       </button>
       <div class="collapse" id="orders-collapse">
         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a href="repair.html" class="link-dark rounded">New</a></li>
+          <li><a href="repair.php" class="link-dark rounded">New</a></li>
           <li><a href="#" class="link-dark rounded">Processing</a></li>
           <li><a href="#" class="link-dark rounded">Finished</a></li>
         </ul>
@@ -56,7 +56,7 @@
       </button>
       <div class="collapse" id="account-collapse">
         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a href="#" class="link-dark rounded">Profile</a></li>
+          <li><a href="login.php" class="link-dark rounded">Profile</a></li>
           <li><a href="#" class="link-dark rounded">Settings</a></li>
           <li><a href="#" class="link-dark rounded">Sign out</a></li>
         </ul>
