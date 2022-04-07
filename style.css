@@ -9,7 +9,28 @@ body {
   overflow-y: hidden; */
 }
 
-form{
+.login{
+  margin-left: -5rem;
+  margin-right: 7rem;
+  width: 150%;
+  text-align: center;
+}
+
+table{
+  margin-top: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+section{
+  margin: auto;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .btn-dark {
+    background-color: #BB9981 !important;
+}
+
+.signup-form{
   margin: auto;
 }
 
@@ -22,7 +43,7 @@ form{
   flex-grow: 1;
   display: flex;
   background: #C5D8A4;
-  padding-left: 350px;
+  padding-left: 250px;
 }
 
 .items{
