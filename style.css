@@ -5,8 +5,13 @@ html {
 body {
   display: flex;
   min-height: 100vh;
+  background: #C5D8A4;
   /* overflow-x: auto;
   overflow-y: hidden; */
+}
+
+.table-wrap {
+  height: 120px;
 }
 
 .login{

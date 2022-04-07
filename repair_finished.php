@@ -8,29 +8,29 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Date of Birth</th>
-      <th scope="col">Address</th>
-      <th scope="col">Phone Number</th>
-      <th scope="col">Email</th>
+      <th scope="col">Ride ID</th>
+      <th scope="col">Date Opened</th>
+      <th scope="col">Date Closed</th>
+      <th scope="col">Description</th>
+      <th scope="col">Repair Cost</th>
+      <th scope="col">Attraction Type</th>
     </tr>
   </thead>
   <tbody>
   <?php
-  $query = 'SELECT * FROM customers;';
+  $query = 'SELECT * FROM maintaince_tickets WHERE ticket_status=1;';
   $result = $conn->query($query);
 
   if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
     echo"<tr>
       <th>".$row['id']."</th>
-      <td>".$row['first_name']."</td>
-      <td>".$row['last_name']."</td>
-      <td>".$row['date_of_birth']."</td>
-      <td>".$row['address']."</td>
-      <td>".$row['phone_number']."</td>
-      <td>".$row['email']."</td>
+      <td>".$row['ride_id']."</td>
+      <td>".$row['date_opened']."</td>
+      <td>".$row['date_closed']."</td>
+      <td>".$row['ticket_discription']."</td>
+      <td>".$row['cost_of_repair']."</td>
+      <td>".$row['attraction_type']."</td>
     </tr>";
     }}
     $conn->close();
@@ -38,7 +38,6 @@
 </tbody>
 </table>
 </div>
-
     <script src="script.js" type="text/javascript">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

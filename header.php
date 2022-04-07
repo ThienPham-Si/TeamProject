@@ -44,8 +44,8 @@
       <div class="collapse" id="orders-collapse">
         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
           <li><a href="repair.php" class="link-dark rounded">New</a></li>
-          <li><a href="#" class="link-dark rounded">Processing</a></li>
-          <li><a href="#" class="link-dark rounded">Finished</a></li>
+          <li><a href="repair_processing.php" class="link-dark rounded">Processing</a></li>
+          <li><a href="repair_finished.php" class="link-dark rounded">Finished</a></li>
         </ul>
       </div>
     </li>
