@@ -14,27 +14,31 @@
       <th scope="col">Description</th>
       <th scope="col">Repair Cost</th>
       <th scope="col">Attraction Type</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
+
   <?php
   $query = 'SELECT * FROM maintaince_tickets WHERE ticket_status=1;';
   $result = $conn->query($query);
 
-  if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-    echo"<tr>
-      <th>".$row['id']."</th>
-      <td>".$row['ride_id']."</td>
-      <td>".$row['date_opened']."</td>
-      <td>".$row['date_closed']."</td>
-      <td>".$row['ticket_discription']."</td>
-      <td>".$row['cost_of_repair']."</td>
-      <td>".$row['attraction_type']."</td>
-    </tr>";
-    }}
-    $conn->close();
-  ?>
+  while($row = $result->fetch_assoc()): ?>
+  <tr>
+    <th><?php echo $row['id']; ?></th>
+    <td><?php echo $row['ride_id']; ?></td>
+    <td><?php echo $row['date_opened']; ?></td>
+    <td><?php echo $row['date_closed']; ?></td>
+    <td><?php echo $row['ticket_discription']; ?></td>
+    <td><?php echo $row['cost_of_repair']; ?></td>
+    <td><?php echo $row['attraction_type']; ?></td>
+    <td>
+      <a href="repair.php?edit=<?php echo $row['id']; ?>" class="btn btn-primary btn-block mb-4">Edit</a>
+      <a href="repair.process.php?delete=<?php echo $row['id']; ?>" class="btn btn-primary btn-block mb-4">Delete</a>
+    </td>
+
+  </tr>
+<?php endwhile; ?>
 </tbody>
 </table>
 </div>

@@ -2,7 +2,19 @@
   include_once 'includes/dbh.inc.php';
   include_once 'header.php';
 ?>
+
 <div id="content" class="content">
+  <?php
+  if(isset($_SESSION['message'])): ?>
+
+  <div class="alert alert-<?=$_SESSION['msg_type']?>">
+    <?php
+      echo $_SESSION['message'];
+      unset($_SESSION['message']);
+     ?>
+  </div>
+<?php endif ?>
+
   <div class="table-wrap">
   <table class="table table-striped table-hover table-responsive">
   <thead>
@@ -14,6 +26,7 @@
       <th scope="col">Address</th>
       <th scope="col">Phone Number</th>
       <th scope="col">Email</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -21,20 +34,22 @@
   $query = 'SELECT * FROM customers;';
   $result = $conn->query($query);
 
-  if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-    echo"<tr>
-      <th>".$row['id']."</th>
-      <td>".$row['first_name']."</td>
-      <td>".$row['last_name']."</td>
-      <td>".$row['date_of_birth']."</td>
-      <td>".$row['address']."</td>
-      <td>".$row['phone_number']."</td>
-      <td>".$row['email']."</td>
-    </tr>";
-    }}
-    $conn->close();
-  ?>
+  while($row = $result->fetch_assoc()): ?>
+  <tr>
+    <th><?php echo $row['id']; ?></th>
+    <td><?php echo $row['first_name']; ?></td>
+    <td><?php echo $row['last_name']; ?></td>
+    <td><?php echo $row['date_of_birth']; ?></td>
+    <td><?php echo $row['address']; ?></td>
+    <td><?php echo $row['phone_number']; ?></td>
+    <td><?php echo $row['email']; ?></td>
+    <td>
+      <a href="index.php?edit=<?php echo $row['id']; ?>" class="btn btn-primary btn-block mb-4">Edit</a>
+      <a href="process.php?delete=<?php echo $row['id']; ?>" class="btn btn-primary btn-block mb-4">Delete</a>
+    </td>
+
+  </tr>
+<?php endwhile; ?>
 </tbody>
 </table>
 </div>
