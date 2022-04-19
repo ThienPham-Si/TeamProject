@@ -13,6 +13,7 @@
                 <th class='tableHeader'>Cancellation Status</th>
                 <th class='tableHeader'>Event Coordinator</th>
                 <th class='tableHeader'>Event Capacity</th>
+                <th class='tableHeader'>Event Date</th>
                 <th class='tableHeader'>Start Time</th>
                 <th class='tableHeader'>End Time</th>
                 <th class='tableHeader'>Location In Theme Park</th>
@@ -55,6 +56,7 @@
             echo('<td class="tableData">' . 'Unable to find coordinator, or coordinator doesn\'t exist.' . '</td>');
 
             echo('<td class="tableData">' . $row['capacity'] . '</td>');
+            echo('<td class="tableData">' . date("F d, Y", strtotime($row['event_date'])) . '</td>');
             echo('<td class="tableData">' . date("g:i a", strtotime($row['start_time']))  . '</td>');
             echo('<td class="tableData">' . date("g:i a", strtotime($row['end_time'])) . '</td>');
             if($location)
