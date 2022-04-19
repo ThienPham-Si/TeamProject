@@ -41,19 +41,44 @@ session_start();
         </ul>
       </div>
     </li>
-
-    <li class="mb-1">
-      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#ride-collapse" aria-expanded="false">
-        Rides
+    
+    <?php
+      echo '<li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#info-collapse" aria-expanded="false">
+        Information
       </button>
-      <div class="collapse" id="ride-collapse">
+      <div class="collapse" id="info-collapse">
         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a href="NewRideForm.php" class="link-dark rounded">Add Rides</a></li>
+          <li><a href="ViewLocations.php" class="link-dark rounded">View Locations</a></li>';
+          if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){ ; }
+          else //only logged in users can view employee info
+            echo '<li><a href="ViewEmployee.php" class="link-dark rounded">View Employee</a></li>';
+        //only admins can add important Theme Park Info
+        if(isset($_SESSION["role"]) && $_SESSION["role"]=='admin')
+          echo'<li><a href="AddLocations.php" class="link-dark rounded">Add Locations</a></li>';
+        echo '
+        </ul>
+      </div>
+    </li>';
+    ?>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#entities-collapse" aria-expanded="false">
+        Attractions
+      </button>
+      <div class="collapse" id="entities-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
           <li><a href="ViewRides.php" class="link-dark rounded">View Rides</a></li>
+          <li><a href="ViewEvents.php" class="link-dark rounded">View Events</a></li>
+        <?php //must be logged in to add or modify attractions 
+        if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) { 
+          echo '<li><a href="NewRideForm.php" class="link-dark rounded">Add Rides</a></li>
+          <li><a href="NewEventForm.php" class="link-dark rounded">Add Events</a></li>
+          <li><a href="ModifyRides.php" class="link-dark rounded">Modify Rides</a></li>
+          <li><a href="ModifyEvents.php" class="link-dark rounded">Modify Events</a></li>';
+        }?>
         </ul>
       </div>
     </li>
-
 
     <li class="mb-1">
       <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
