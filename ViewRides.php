@@ -20,7 +20,10 @@
                 <th class='tableHeader'>Duration (Minutes)</th>
                 <th class='tableHeader'>Distance Traveled (Miles)</th>
                 <th class='tableHeader'>Operation Hours</th>
-                <th class='tableHeader'>Location In Theme Park</th>
+                <th class='tableHeader'>Location In Theme Park</th>");
+                if(isset($_SESSION["role"]) && $_SESSION["role"]=='admin') 
+                    echo "<th class='tableHeader'>Action</th>";
+                echo("
             </tr>
         ");
     
@@ -48,6 +51,25 @@
             echo('<td class="tableData">' . $row['distance_travelled'] . '</td>');
             echo('<td class="tableData">' . $row['operation_hours'] . '</td>');
             echo('<td class="tableData">' . $row['location'] . '</td>');
+            if(isset($_SESSION["role"]) && $_SESSION["role"]=='admin') {
+                echo ('<td class="tableData">
+                    <form action="delete.php" method="POST" >
+                        <input type="hidden" 
+                        value="' . $row["ride_id"]. '" 
+                        name="id" />
+                        <input type="hidden" 
+                        value="ride_id" 
+                        name="idAttributeName" />
+                        <input type="hidden" 
+                        value="rides" 
+                        name="tableName" />
+                        <input 
+                        type="submit" 
+                        name= "delete" 
+                        value="Delete">
+                    </form>
+                    </td>');
+            }
             echo "</tr>";
         }
     } else {
