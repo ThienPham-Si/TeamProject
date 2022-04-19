@@ -3,7 +3,7 @@
    require_once "header.php";
    echo('<div id="content" class="content">');
 
-    $name = $description = $numRiders = $minRiderHeight = $isOperating = $firstOpened = $firstOpened = $capacity = $speed = $duration = $openingTime = $closingTime = $operationHours = $location = "";
+    $name = $description = $numRiders = $minRiderHeight = $isOperating = $firstOpened = $capacity = $speed = $duration = $openingTime = $closingTime = $operationHours = $location = "";
 
     if(isset($_POST)) {
         $name = validate($_POST["name"]);
