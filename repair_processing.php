@@ -1,7 +1,7 @@
 <?php
   include_once 'includes/dbh.inc.php';
   include_once 'header.php';
-?>
+  ?>
 <div id="content" class="content">
   <div class="table-wrap">
   <table class="table table-striped table-hover table-responsive">
@@ -14,13 +14,19 @@
       <th scope="col">Description</th>
       <th scope="col">Repair Cost</th>
       <th scope="col">Attraction Type</th>
-      <th scope="col">Action</th>
+      <?php
+      if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+        ;
+      }else{
+        echo "<th scope='col'>Action</th>";
+      }
+       ?>
     </tr>
   </thead>
   <tbody>
 
   <?php
-  $query = 'SELECT * FROM maintaince_tickets WHERE ticket_status=0;';
+  $query = 'SELECT * FROM maintaince_tickets WHERE ticket_status=0 AND is_deleted=0;';
   $result = $conn->query($query);
 
   while($row = $result->fetch_assoc()): ?>
@@ -32,10 +38,20 @@
     <td><?php echo $row['ticket_discription']; ?></td>
     <td><?php echo $row['cost_of_repair']; ?></td>
     <td><?php echo $row['attraction_type']; ?></td>
-    <td>
+    <?php
+    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+      ;
+    }else{
+      echo "<td><a href='repair.php?edit=".$row['id']."' class='btn btn-primary btn-block mb-4'>Edit</a></td>";
+      if($_SESSION["role"]==="admin"){
+        echo "<td><a href='repair.process.php?delete=".$row['id']."' class='btn btn-primary btn-block mb-4'>Delete</a></td>";
+      }
+    }
+     ?>
+    <!-- <td>
       <a href="repair.php?edit=<?php echo $row['id']; ?>" class="btn btn-primary btn-block mb-4">Edit</a>
       <a href="repair.process.php?delete=<?php echo $row['id']; ?>" class="btn btn-primary btn-block mb-4">Delete</a>
-    </td>
+    </td> -->
 
   </tr>
 <?php endwhile; ?>

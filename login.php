@@ -1,62 +1,121 @@
 <?php
-  include_once 'header.php';
-?>
-<div id="content" class="content">
-  <section>
-    <form action="includes/signup.inc.php" method="post" class="login">
-      <div class="form-outline mb-4">
-        <input type="email" id="form2Example1" class="form-control" />
-        <label class="form-label" for="form2Example1">Email address</label>
-      </div>
+require_once "includes/dbh.inc.php";
+require_once "header.php";
 
-      <div class="form-outline mb-4">
-        <input type="password" id="form2Example2" class="form-control" />
-        <label class="form-label" for="form2Example2">Password</label>
-      </div>
+// Check if the user is already logged in, if yes then redirect him to welcome page
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+  echo "<meta http-equiv='refresh' content='0;url=welcome.php'>";
+    exit;
+}
 
-      <div class="row mb-4">
-        <div class="col d-flex justify-content-center">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="form2Example31"
-              checked
-            />
-            <label class="form-check-label" for="form2Example31"> Remember me </label>
-          </div>
-        </div>
+// Include config file
 
-        <div class="col">
-          <a href="#!">Forgot password?</a>
-        </div>
-      </div>
+// Define variables and initialize with empty values
+$username = $password = "";
+$username_err = $password_err = $login_err = "";
 
-      <button type="button" class="btn btn-dark btn-block mb-4">Sign in</button>
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-      <div class="text-center">
-        <p>Not a member? <a href="#!">Register</a></p>
-        </button>
-      </div>
-    </form>
-
-    <?php
-    if (isset($_GET["error"])){
-      if($_GET["error"]=="emptyinput"){
-        echo "<p>Fill in all the fields!</p>";
-      }
-      if($_GET["error"]=="wronglogin"){
-        echo "<p>Incorrect login information!<p>";
-      }
+    // Check if username is empty
+    if(empty(trim($_POST["username"]))){
+        $username_err = "Please enter username.";
+    } else{
+        $username = trim($_POST["username"]);
     }
 
+    // Check if password is empty
+    if(empty(trim($_POST["password"]))){
+        $password_err = "Please enter your password.";
+    } else{
+        $password = trim($_POST["password"]);
+    }
 
+    // Validate credentials
+    if(empty($username_err) && empty($password_err)){
+        // Prepare a select statement
+        $sql = "SELECT id, username, password, role FROM user_login WHERE username = ?";
+
+        if($stmt = mysqli_prepare($conn, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
+
+            // Set parameters
+            $param_username = $username;
+
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                // Store result
+                mysqli_stmt_store_result($stmt);
+
+                // Check if username exists, if yes then verify password
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    // Bind result variables
+                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $role);
+                    if(mysqli_stmt_fetch($stmt)){
+                        if(password_verify($password, $hashed_password)){
+                            // Password is correct, so start a new session
+
+                            // Store data in session variables
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["id"] = $id;
+                            $_SESSION["username"] = $username;
+                            $_SESSION["role"] = $role;
+
+                            // Redirect user to welcome page
+                            echo "<meta http-equiv='refresh' content='0;url=welcome.php'>";
+                        } else{
+                            // Password is not valid, display a generic error message
+                            $login_err = "Invalid username or password.";
+                        }
+                    }
+                } else{
+                    // Username doesn't exist, display a generic error message
+                    $login_err = "Invalid username or password.";
+                }
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+
+    // Close connection
+    mysqli_close($conn);
+}
+?>
+  <div id="content" class="content">
+    <section>
+        <h2>Login</h2>
+
+        <?php
+        if(!empty($login_err)){
+            echo '<div class="alert alert-danger">' . $login_err . '</div>';
+        }
+        ?>
+
+        <form action="login.php" method="post">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                <span class="invalid-feedback"><?php echo $username_err; ?></span>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+                <span class="invalid-feedback"><?php echo $password_err; ?></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Login">
+            </div>
+        </form>
+      </section>
+    </div>
+
+
+
+    <?php
+      include_once 'footer.php';
      ?>
-
-  </section>
-</div>
-
-<?php
-  include_once 'footer.php';
- ?>

@@ -1,5 +1,4 @@
 <?php
-  session_start();
   include_once 'includes/dbh.inc.php';
 
   if (isset($_POST['submit'])){
@@ -37,7 +36,10 @@
 
   if(isset($_GET['delete'])){
     $id = $_GET['delete'];
-    $mysqli->query("DELETE FROM dining WHERE id=$id") or die($mysqli->error());
+    $mysqli->query("UPDATE `Theme_Park_Database`.`maintaince_tickets`
+    SET
+    `is_deleted` = 1
+    WHERE id=$id;") or die($mysqli->error());
 
     $_SESSION['message'] = 'Record has been deleted';
     $_SESSION['msg_type'] = 'danger';

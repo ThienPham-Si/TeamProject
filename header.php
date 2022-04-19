@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -37,13 +41,33 @@
         </ul>
       </div>
     </li>
+
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#ride-collapse" aria-expanded="false">
+        Rides
+      </button>
+      <div class="collapse" id="ride-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="NewRideForm.php" class="link-dark rounded">Add Rides</a></li>
+          <li><a href="ViewRides.php" class="link-dark rounded">View Rides</a></li>
+        </ul>
+      </div>
+    </li>
+
+
     <li class="mb-1">
       <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-        Maintaince
+        Maintenance
       </button>
       <div class="collapse" id="orders-collapse">
         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a href="repair.php" class="link-dark rounded">New</a></li>
+          <?php
+          if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+            ;
+          }else{
+            echo"<li><a href='repair.php' class='link-dark rounded'>New</a></li>";
+          }
+           ?>
           <li><a href="repair_processing.php" class="link-dark rounded">Processing</a></li>
           <li><a href="repair_finished.php" class="link-dark rounded">Finished</a></li>
         </ul>
@@ -56,10 +80,17 @@
       </button>
       <div class="collapse" id="account-collapse">
         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a href="login.php" class="link-dark rounded">Profile</a></li>
-          <li><a href="signup.php" class="link-dark rounded">Settings</a></li>
-          <li><a href="login.php" class="link-dark rounded">Sign out</a></li>
+          <?php
+          if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+            echo "<li><a href='login.php' class='link-dark rounded'>Login</a></li>
+            <li><a href='sign-up.php' class='link-dark rounded'>Create Account</a></li>";
+          }else{
+            echo"<li><a href='welcome.php' class='link-dark rounded'>Profile</a></li>
+            <li><a href='Display_Notifications.php' class='link-dark rounded'>Notification</a></li>
+            <li><a href='logout.php' class='link-dark rounded'>Sign out</a></li>";
+          }
 
+           ?>
           <?php
           if (isset($_SESSION["useruid"])){
             echo '<li><a href="login.php" class="link-dark rounded">Success</a></li>';

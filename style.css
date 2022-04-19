@@ -6,8 +6,6 @@ body {
   display: flex;
   min-height: 100vh;
   background: #C5D8A4;
-  /* overflow-x: auto;
-  overflow-y: hidden; */
 }
 
 .table-wrap {
@@ -153,7 +151,7 @@ section{
   font-family: Roboto, sans-serif;
   letter-spacing: 0.02em;
   position: relative;
-  border-collapse: collapse; 
+  border-collapse: collapse;
 }
 
 .tableRow:nth-of-type(odd){

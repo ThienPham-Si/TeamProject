@@ -1,10 +1,15 @@
 <?php
-  include_once 'header.php';
   include_once 'repair.process.php';
   include_once 'includes/dbh.inc.php';
+  include_once 'header.php';
 ?>
 
 <?php
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+  echo "<meta http-equiv='refresh' content='0;url=login.php'>";
+    exit;
+}
+
   $ride_id = '';
   $date_start = '';
   $date_close = '';
@@ -16,6 +21,12 @@
   $finished = false;
 
 	if (isset($_GET['edit'])) {
+    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+      $_SESSION['message'] = 'Please log in first';
+      $_SESSION['msg_type'] = 'danger';
+      header("Location: index.php");
+    }
+
 		$id = $_GET['edit'];
 		$update = true;
     $record = mysqli_query($conn, "SELECT * FROM maintaince_tickets WHERE id=$id");
