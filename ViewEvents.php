@@ -13,9 +13,13 @@
                 <th class='tableHeader'>Cancellation Status</th>
                 <th class='tableHeader'>Event Coordinator</th>
                 <th class='tableHeader'>Event Capacity</th>
+                <th class='tableHeader'>Event Date</th>
                 <th class='tableHeader'>Start Time</th>
                 <th class='tableHeader'>End Time</th>
-                <th class='tableHeader'>Location In Theme Park</th>
+                <th class='tableHeader'>Location In Theme Park</th>");
+            if(isset($_SESSION["role"]) && $_SESSION["role"]=='admin') 
+                echo "<th class='tableHeader'>Action</th>";
+                echo("
             </tr>
         ");
     
@@ -55,10 +59,31 @@
             echo('<td class="tableData">' . 'Unable to find coordinator, or coordinator doesn\'t exist.' . '</td>');
 
             echo('<td class="tableData">' . $row['capacity'] . '</td>');
+            echo('<td class="tableData">' . date("F d, Y", strtotime($row['event_date'])) . '</td>');
             echo('<td class="tableData">' . date("g:i a", strtotime($row['start_time']))  . '</td>');
             echo('<td class="tableData">' . date("g:i a", strtotime($row['end_time'])) . '</td>');
             if($location)
                 echo('<td class="tableData">' . mysqli_fetch_array($location)['location'] . '</td>');
+
+            if(isset($_SESSION["role"]) && $_SESSION["role"]=='admin') {
+                echo ('<td class="tableData">
+          <form action="delete.php" method="POST" >
+            <input type="hidden" 
+              value="' . $row["event_id"]. '" 
+              name="id" />
+            <input type="hidden" 
+              value="event_id"
+              name="idAttributeName" />
+            <input type="hidden" 
+              value="park_events" 
+              name="tableName" />
+            <input 
+              type="submit" 
+              name= "delete" 
+              value="Delete">
+          </form>
+        </td>');
+      }
             echo "</tr>";
         }
     } else {
