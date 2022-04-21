@@ -215,11 +215,12 @@
 
     if (isset($_POST["updated_event"])) {
       $id = $_POST["id"];
-      $name = $description = $coordinator = $capacity = $isCancelled = $startTime = $endTime = $location = "";
+      $name = $description = $coordinator = $date = $capacity = $isCancelled = $startTime = $endTime = $location = "";
       
       $name = validate($_POST["name"]);
       $escape = trim($_POST["description"]);
       $description = mysqli_real_escape_string($conn, $escape);
+      $date = validate($_POST['date']);
       $capacity = validate($_POST["capacity"]);
       $coordinator = validate($_POST['coordinator']);
       if(isset($_POST['isCancelled']))
@@ -236,16 +237,21 @@
           `event_description`='$description',
           `capacity`=$capacity,
           `event_coordinator`='$coordinator',
+          `event_date`='$date',
           `is_cancelled`=$isCancelled,
           `start_time`='$startTime',
           `end_time`='$endTime',
           `location`='$location'
         WHERE `event_id`=$id;";
-
-      if (mysqli_query($conn, $updateRow)) {
-        echo "Changes updated! View events to see the change.";
-      } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        
+      try {
+        if (mysqli_query($conn, $updateRow)) {
+          echo "Changes updated! View events to see the change.";
+        } else {
+          echo 'Changes not updated - something went wrong!';
+        }
+      } catch (mysqli_sql_exception) {
+        echo '<p class="items">Unable to display rainouts.</p>';
       }
     }
 
@@ -255,6 +261,6 @@
 </div>
 
 <?php
-$conn->close();
-include_once "footer.php";
+  $conn->close();
+  include_once "footer.php";
 ?>
