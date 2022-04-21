@@ -3,7 +3,7 @@
    require_once "header.php";
    echo('<div id="content" class="content">');
 
-    $name = $description = $firstOpened = $coordinator = $capacity = $startTime = $endTime = $location = "";
+    $name = $description = $date = $coordinator = $capacity = $startTime = $endTime = $location = "";
 
     if(isset($_POST)) {
         require_once "Validate.php";
@@ -13,6 +13,7 @@
             $escape = trim($_POST["description"]);
             $description = mysqli_real_escape_string($conn, $escape);
         }
+        $date = validate($_POST["date"]);
         $coordinator = validate($_POST["coordinator"]);
         $capacity = validate($_POST["capacity"]);
         $startTime = validate($_POST["startTime"]);
@@ -24,6 +25,7 @@
         (`event_name`,
         `event_description`,
         `event_coordinator`,
+        `event_date`,
         `capacity`,
         `start_time`,
         `end_time`,
@@ -32,16 +34,19 @@
         '$name',
         '$description',
         $coordinator,
+        '$date',
         $capacity,
         '$startTime',
         '$endTime',
         $location
     );";
 
-    if (mysqli_query($conn, $addRow)) {
-        echo "<p class='items'>New record created successfully! View or add more events through the menu!</p>";
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    try {
+        if (mysqli_query($conn, $addRow)) {
+            echo "<p class='items'>New record created successfully! View or add more events through the menu!</p>";
+        }
+    } catch (mysqli_sql_exception) {
+        echo '<p class="items">Unable to add this event.</p>';
     }
     $conn->close();
     echo("</div>");

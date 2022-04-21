@@ -54,9 +54,7 @@
           exit;
         }
       }
-    }
-
-    if($tableName=="employees") {
+    } else if($tableName=="employees") {
       //get employee role - if its a coordinator then don't delete
       $emplQuery = "SELECT first_name, m_name, last_name, employee_role
                     from Theme_Park_Database.employees
@@ -92,4 +90,6 @@
         }
       }
     }
+    else $canDelete = true;
+
 ?>

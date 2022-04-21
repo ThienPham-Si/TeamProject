@@ -2,7 +2,7 @@
     include_once 'header.php'; 
     include_once 'includes/dbh.inc.php';
 ?>
-<div id="content" class="content">
+<div id="content" class="content"><div class="items">
 <?php
     echo("
         <table class='table'>
@@ -51,4 +51,5 @@
     $conn->close();
  ?> 
  </div>
+</div>
 <?php include_once "footer.php"; ?>
