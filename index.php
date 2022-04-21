@@ -2,7 +2,7 @@
   include_once 'header.php';
 ?>
 <div id="content" class="content">
-  <section>
+  <div id="bg"></div>
     <?php
     if(isset($_SESSION['message'])):
       echo $_SESSION['message'];
@@ -15,8 +15,7 @@
        ?>
     </div>
   <?php endif ?>
-  </section>
-  </div>
+</div>
 
 
 

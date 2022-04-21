@@ -65,22 +65,6 @@ include_once "includes/dbh.inc.php"
       </div>
 
       <div class="form-group row">
-        <label class="col-4 col-form-label">
-          Event Date:
-        </label>
-        <div class="col-8">
-          <input 
-            type="date" 
-            name="date" 
-            class="form-control" 
-            value="<?php echo date("Y-m-d"); ?>" 
-            min="<?php echo date("Y-m-d"); ?>"
-            required>
-        </div>
-      </div>
-
-
-      <div class="form-group row">
         <label class="col-4 col-form-label">Event Duration (Between 7 am and 10 pm):</label>
         <div class="col-8">
           <small>Start Time:</small>

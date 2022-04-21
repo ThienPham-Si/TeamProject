@@ -1,24 +1,25 @@
 
 <?php
-  include_once "header.php";
-  include_once "Notifications.php";
+    include('Notifications.php');
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
 
-  <div id="content" class="content">
-      <div class="row">
+</head>
+<body>
+<div class="conatainer">
+    <div class="row">
         <div class = "col-sm-12">
         <?php echo $deleteMsg??'';?>
         <div class = "table-responsive">
             <table id ="tableName" class = "table table-striped">
-            <thead><tr><th>S.N</th>
 
             <th>Employee ID</th>
             <th>Modification Location</th>
-            <th>Checked? (0 = no, 1 = yes)</th>
-            <td>Toggle Checked</th>
+            <th>Toggle Checked</th>
             <th>Notification Number</th>
-            <th>Is Deleted</th>
         </thead>
         <tbody>
         <?php
@@ -27,23 +28,22 @@
                 $sn = 1;
                 foreach($fetchData as $data)
                 {
+                    if($data['checked'] == 0 && $data['is_deleted'] == 0){
                         ?>
                     <tr>
-                    <td><?php echo $sn; ?></td>
                     <td><?php echo $data['employee_to_notify']??''?></td>
                     <td><?php echo $data['table_to_check']??''?></td>
-                    <td><?php echo $data['checked']??''?></td>
                     <?php echo '<form action ="" method="POST">'?>
                     <?php echo '<input type = "hidden" name = "checkbox[]" value = "false" id = "checkbox">'?>
                     <td><?php echo  '<input type = "checkbox" name="checkbox[]" value="true" id="checkbox">'?></td>
                     <td><?php echo $data['notification_number']??''?></td>
-                    <td><?php echo $data['is_deleted']??''?></td>
-                    </tr>
-                    <?php
 
-                    ?>
                     <?php
+                    $query = "UPDATE Notifications SET sn = $sn WHERE notification_number = ". $data['notification_number'];
+                    $result = $conn -> query($query);
+
                     $sn++;
+                    }
                 }
             }
             else
@@ -70,26 +70,38 @@
     </div>
 </div>
 
+</body>
+</html>
+
 
 <?php
-include_once 'footer.php';
-
-//error_reporting(E_ERROR | E_WARNING | E_PARSE);
 if(isset($_POST['update']))
 {
     $checked_array = $_POST['checkbox'];
+    $query = "SELECT COUNT('checked') AS Num_Not_Checked FROM Notifications WHERE checked = 0";
+    $result = $conn -> query($query);
 
-    for($i = 0; $i < $sn; $i++)
+    $row = mysqli_fetch_array($result);
+    $num_not_checked = $row['Num_Not_Checked'];
+    $i = 0 /* - $num_not_checked*/ ;
+    foreach($checked_array as $check)
     {
-        //echo $checked_array[$i];
-        if($checked_array[$i] == true)
+       if($check == 'true')
         {
-            //echo "in if statement, i = " . $i;
-            $query = "UPDATE Theme_Park_Database.Notifications SET checked = true WHERE notification_number = " .$i;
-            $query_run = mysqli_query($conn,$query);
+            $query = "UPDATE Theme_Park_Database.Notifications SET checked = true WHERE sn = $i";
+            $result = $conn -> query($query);
+            if($result == false)
+            {
+                echo '<script> alert("Update failed") </script>';
+            }
+            else
+            {
+                //echo '<script> alert("Update made")</script>';
+            }
+
         }
+        $i++;
+
     }
-
-
 }
 ?>

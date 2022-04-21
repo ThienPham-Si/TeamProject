@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -17,7 +13,7 @@ session_start();
   <a id="logo-a" href="index.php" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
     <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
     <span><img id="logo" src="includes/logo.png" /></span>
-    <span class="fs-5 fw-semibold" style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">Adventure Park</span>
+    <span class="fs-5 fw-semibold">Adventure Park</span>
   </a>
   <ul class="list-unstyled ps-0">
     <li class="mb-1">
@@ -37,7 +33,7 @@ session_start();
       </button>
       <div class="collapse" id="dashboard-collapse">
         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a href="monthlyReportForm.php" class="link-dark rounded">Overview</a></li>
+          <li><a href="table.php" class="link-dark rounded">Overview</a></li>
           <li><a href="#" class="link-dark rounded">Monthly</a></li>
         </ul>
       </div>

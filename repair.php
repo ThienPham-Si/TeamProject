@@ -73,7 +73,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
           Please select one...
         </option>
         <?php
-        $query = 'SELECT * FROM rides WHERE is_deleted=0;';
+        $query = 'SELECT * FROM rides;';
         $result = $conn->query($query);
 
         while($row = $result->fetch_assoc()): ?>

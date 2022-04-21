@@ -7,8 +7,8 @@
 
 
     $db = $conn;
-    $tableName = "Notifications";
-    $columns = ['employee_to_notify','table_to_check','checked','notification_number','is_deleted','sn'];
+    $tableName = "dining";
+    $columns = ['id','dining_type', 'open_hour', 'close_hour','operational_status','locations','is_deleted'];
     $fetchData = fetch_data($db, $tableName, $columns);
 
     function fetch_data($db, $tableName, $columns)
@@ -19,7 +19,7 @@
         else
         {
             $columnName = implode(", ", $columns);
-            $query = "SELECT " . $columnName . " FROM $tableName ";
+            $query = "SELECT " . $columnName . " FROM $tableName WHERE is_deleted = false";
             $result = $db -> query($query);
 
             if($result == true)
