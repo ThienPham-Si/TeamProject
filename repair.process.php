@@ -11,7 +11,7 @@
     $attraction_type = $_POST['attraction-type'];
     $cost = $_POST['repair-cost'];
     $close = $_POST['maintaince-close'];
-    $finished = $_POST['repair-finished'];
+    $finished = $_POST['finished'];
 
     $sql = "INSERT INTO `Theme_Park_Database`.`maintaince_tickets`
     (`ride_id`,
@@ -58,7 +58,7 @@ if (isset($_POST['update'])) {
   $attraction_type = $_POST['attraction-type'];
   $cost = $_POST['repair-cost'];
   $close = $_POST['maintaince-close'];
-  $finished = $_POST['repair-finished'];
+  $finished = $_POST['finished'];
 
 
   $sql = "UPDATE `Theme_Park_Database`.`maintaince_tickets`

@@ -1,14 +1,11 @@
 
 <?php
-    include_once 'header2.php';
     include('includes/dbh.inc.php');
-    echo('<div id="content" class="content">');
-
 
 
     $db = $conn;
     $tableName = "Notifications";
-    $columns = ['employee_to_notify','table_to_check','checked','notification_number','is_deleted','sn'];
+    $columns = ['employee_to_notify','table_to_check','checked','notification_number','is_deleted','sn','event_or_maintenance_number','description'];
     $fetchData = fetch_data($db, $tableName, $columns);
 
     function fetch_data($db, $tableName, $columns)
@@ -43,5 +40,3 @@
     }
 
 ?>
-
-<?php include_once "footer.php"; ?>

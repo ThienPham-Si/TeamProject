@@ -5,10 +5,10 @@
     $tableName = $_POST["tableName"];
     $idAttribute = $_POST["idAttributeName"];
     include_once "check.php";
-    
+
     if($canDelete) {
-      $deleteQuery = "UPDATE `Theme_Park_Database`.$tableName 
-                  SET is_deleted=TRUE 
+      $deleteQuery = "UPDATE `Theme_Park_Database`.$tableName
+                  SET is_deleted=TRUE
                   WHERE $idAttribute='$id'";
 
       try {
@@ -17,12 +17,12 @@
           header("Location: success.php");
           exit;
         }
-      } catch (mysqli_sql_exception) {
+      } catch (mysqli_sql_exception $e) {
         $conn->close();
         header("Location: index.php");
       }
     } else {
       header("Location: index.php");
     }
-  }    
+  }
 ?>

@@ -36,18 +36,19 @@
             $two = $_POST['two'];
         switch($option){
             case "Customers":
-                //$query = "SELECT count(id) FROM customers"
-                /*$query = "SELECT COUNT(pass_id)
+                $count = "SELECT COUNT(pass_id)
                 FROM tickets
-                WHERE check_in=TRUE
+                WHERE check_in=TRUE AND
                 date_check_in >= '$one'
                 AND date_check_in <= '$two'";
-                $result = mysqli_query($conn, $query);
+                $result = mysqli_query($conn, $count);
+                echo "<tr><th class='tableHeader'>Total Customers</th></tr>";
                 while($row = $result->fetch_assoc())
                 {
-                    echo('tr class="tableData">' . $row['date_check_in'] . '</td');
-                    echo('tr class="tableData">' . $row['date_check_in'] . '</td');                        
-                }*/
+                    echo('<tr>');
+                    echo('<td class="tableData">' . $row['COUNT(pass_id)'] . '</td>');
+                    echo('</tr>');                      
+                }
                 break;
             case "Broken Rides": 
                 //total number of broken rides
@@ -79,20 +80,22 @@
                 }
                 break;
             case "Popular Rides":
-                $query = "SELECT ride_name, times_ran
+                //top 3 rides
+                $query = "SELECT ride_name, times_ran,month_year
                 FROM rides, ride_stats
-                WHERE month_year <= '$two' AND rides.ride_id = ride_stats.ride_id
-                GROUP BY rides.ride_id
+                WHERE month_year <= '$two'
+                AND rides.ride_id = ride_stats.ride_id
                 ORDER BY times_ran DESC
                 LIMIT 3";
                 $result = mysqli_query($conn, $query);
                 echo "<tr><th class='tableHeader'>Ride Name</th>
-                <th class='tableHeader'>Number of Times Ran</th></tr>";
+                <th class='tableHeader'>Number of Times Ran</th><th class='tableHeader'>Updated</th></th>";
                 while($row = mysqli_fetch_assoc($result))
                 {
                     echo('<tr>');
                     echo('<td class="tableData">' . $row['ride_name'] . '</td>');
                     echo('<td class="tableData">' . $row['times_ran'] . '</td>');
+                    echo('<td class="tableData">' . $row['month_year'] . '</td>');
                     echo('</tr>');
                 }
                  break;

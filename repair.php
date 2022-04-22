@@ -129,7 +129,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   </div>
 
   <div class="form-check">
-  <input class="form-check-input" type="checkbox" name="repair-finished"
+  <input class="form-check-input" type="checkbox" name="finished"
   <?php if($finished==true) echo " checked "?>
   value="1"/>
   <label class="form-check-label">

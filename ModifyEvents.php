@@ -8,8 +8,8 @@
   <p>Only events that haven't happened yet can be updated. Select an event to update: </p>
     <form method="POST" action="" name="selected_event">
       <?php
-      $query = "SELECT event_id, event_name 
-                FROM `Theme_Park_Database`.`park_events` 
+      $query = "SELECT event_id, event_name
+                FROM `Theme_Park_Database`.`park_events`
                 WHERE `Theme_Park_Database`.`park_events`.event_date >= current_date()
                 ORDER BY event_id";
       if ($result = mysqli_query($conn, $query)) {
@@ -41,24 +41,24 @@
               Name:
             </label>
             <div class="col-8">
-              <input id = "text" 
-              type="text" 
-              name="name" 
-              pattern="[a-zA-Z\d\-\s]+" 
-              class="form-control" 
+              <input id = "text"
+              type="text"
+              name="name"
+              pattern="[a-zA-Z\d\-\s]+"
+              class="form-control"
               value="' . $row['event_name'] . '"
               required>
             </div>
           </div>
-          
+
           <div class="form-group row">
             <label for="description" class="col-4 col-form-label">
               Event Description:
             </label>
-            <div class="col-8">  
-              <textarea name="description" 
-                rows="5" 
-                cols="40" 
+            <div class="col-8">
+              <textarea name="description"
+                rows="5"
+                cols="40"
                 class="form-control" required>' . $row['event_description'] . '</textarea>
             </div>
           </div>
@@ -68,9 +68,9 @@
               Event Coordinator:
             </label>
             <div class="col-8">';
-              
-            $getCoordinators = "SELECT employee_id, first_name, m_name, last_name 
-              FROM `Theme_Park_Database`.`employees` 
+
+            $getCoordinators = "SELECT employee_id, first_name, m_name, last_name
+              FROM `Theme_Park_Database`.`employees`
               WHERE `Theme_Park_Database`.`employees`.`employee_role`='Event Coordinator'
               ORDER BY employee_id";
 
@@ -95,21 +95,21 @@
             }
             echo ' </div>
           </div>
-          
+
           <div class="form-group row">
             <label class="col-4 col-form-label">
               Capacity:
             </label>
             <div class="col-8">
-              <input 
-                type="number" 
-                name="capacity" 
-                min=1 
-                max=100 
+              <input
+                type="number"
+                name="capacity"
+                min=1
+                max=100
                 maxlength="3"
                 onkeydown="if(event.key===' . '){event.preventDefault();}"
                 oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,\'\');"
-                class="form-control" 
+                class="form-control"
                 value="' . $row["capacity"] . '"
                 required>
             </div>
@@ -121,7 +121,7 @@
               echo '<input type="checkbox" name="isCancelled"';
               if((bool)$row['is_cancelled'] == true)
                 echo 'checked value="true">';
-              else 
+              else
                 echo '>';
               echo '
             </div>
@@ -132,10 +132,10 @@
               Event Date:
             </label>
             <div class="col-8">
-              <input 
-                type="date" 
-                name="date" 
-                class="form-control" 
+              <input
+                type="date"
+                name="date"
+                class="form-control"
                 value=' . $row['event_date'] . '
                 min=' . date("Y-m-d") . '
                 required>
@@ -145,24 +145,24 @@
           <div class="form-group row">
             <label class="col-4 col-form-label">
               Event Duration (Between 7 am and 10 pm)
-            </label> 
+            </label>
 
             <div class="col-8">
               <small>Start Time</small>
-              <input 
-                type="time" 
-                name="startTime" 
-                min="07:00" 
+              <input
+                type="time"
+                name="startTime"
+                min="07:00"
                 max="22:00"
                 class="form-control"
                 value="' . $opening . ':00"
                 required>
-              
+
               <small>End Time</small>
-              <input 
-                type="time" 
-                name="endTime" 
-                min="7:00" 
+              <input
+                type="time"
+                name="endTime"
+                min="7:00"
                 max="22:00"
                 class="form-control"
                 value="' . $closing . ':00"
@@ -178,9 +178,9 @@
             <div class="col-8">';
 
             $getLocations = "SELECT location_id, location
-                            FROM `Theme_Park_Database`.`locations` 
+                            FROM `Theme_Park_Database`.`locations`
                             ORDER BY location_id";
-            
+
             if ($locResult = mysqli_query($conn, $getLocations)) {
               echo ('<select id="select" name="location" required>
                       <option value="" disabled selected>--select--</option>');
@@ -198,12 +198,12 @@
             </div>
           </div>
 
-          <input type="hidden" 
-            value="' . $_POST["event_id"] . '" 
+          <input type="hidden"
+            value="' . $_POST["event_id"] . '"
             name="id" />
-          
-          <input type="submit" 
-            name= "updated_event" 
+
+          <input type="submit"
+            name= "updated_event"
             value="Update Changes">
         </form>';
       }
@@ -216,7 +216,7 @@
     if (isset($_POST["updated_event"])) {
       $id = $_POST["id"];
       $name = $description = $coordinator = $date = $capacity = $isCancelled = $startTime = $endTime = $location = "";
-      
+
       $name = validate($_POST["name"]);
       $escape = trim($_POST["description"]);
       $description = mysqli_real_escape_string($conn, $escape);
@@ -225,15 +225,15 @@
       $coordinator = validate($_POST['coordinator']);
       if(isset($_POST['isCancelled']))
         $isCancelled = "TRUE";
-      else 
+      else
         $isCancelled = "FALSE";
       $startTime = validate($_POST["startTime"]);
       $endTime = validate($_POST["endTime"]);
       $location = validate($_POST["location"]);
 
       $updateRow = "UPDATE `Theme_Park_Database`.`park_events`
-        SET 
-          `event_name`='$name', 
+        SET
+          `event_name`='$name',
           `event_description`='$description',
           `capacity`=$capacity,
           `event_coordinator`='$coordinator',
@@ -243,14 +243,14 @@
           `end_time`='$endTime',
           `location`='$location'
         WHERE `event_id`=$id;";
-        
+
       try {
         if (mysqli_query($conn, $updateRow)) {
           echo "Changes updated! View events to see the change.";
         } else {
           echo 'Changes not updated - something went wrong!';
         }
-      } catch (mysqli_sql_exception) {
+      } catch (mysqli_sql_exception $e) {
         echo '<p class="items">Unable to display rainouts.</p>';
       }
     }

@@ -1,4 +1,4 @@
-<?php 
+<?php
    require_once "includes/dbh.inc.php";
    require_once "header.php";
    echo('<div id="content" class="content">');
@@ -45,7 +45,7 @@
         if (mysqli_query($conn, $addRow)) {
             echo "<p class='items'>New record created successfully! View or add more events through the menu!</p>";
         }
-    } catch (mysqli_sql_exception) {
+    } catch (mysqli_sql_exception $e) {
         echo '<p class="items">Unable to add this event.</p>';
     }
     $conn->close();
