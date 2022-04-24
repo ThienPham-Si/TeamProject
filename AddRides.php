@@ -1,11 +1,9 @@
-<?php
+<?php 
   require_once "includes/dbh.inc.php";
-  require_once "header.php";
-  echo('<div id="content" class="content">');
 
   $name = $description = $numRiders = $minRiderHeight = $isOperating = $firstOpened = $capacity = $speed = $duration = $openingTime = $closingTime = $operationHours = $location = "";
   require_once "Validate.php";
-
+  
   if(isset($_POST)) {
     $name = validate($_POST["name"]);
     if(isset($_POST["description"])) {
@@ -17,7 +15,7 @@
       $minRiderHeight = validate($_POST["minRiderHeight"]);
     if(isset($_POST["isOperating"]))
       $isOperating = "TRUE";
-    else
+    else 
       $isOperating = "FALSE";
     $firstOpened = validate($_POST["firstOpened"]);
     $capacity = validate($_POST["capacity"]);
@@ -29,7 +27,7 @@
     $operationHours = mysqli_real_escape_string($conn, $combined);
     $location = validate($_POST["location"]);
   }
-
+  
   $addRow = "INSERT INTO `Theme_Park_Database`.`rides`
     (`ride_name`,
     `ride_description`,
@@ -55,20 +53,19 @@
     $capacity,
     $speed,
     $duration,
-    ($speed/60.0*$duration),
+    ($speed/60.0*$duration), 
     '$operationHours',
     '$location'
   );";
 
   try {
     if (mysqli_query($conn, $addRow)) {
-      echo "<p class='items'>New record created successfully! View or add more rides through the menu!</p>";
+      header("Location: success.php");
     }
   } catch (mysqli_sql_exception $e) {
-    echo '<p class="items">Unable to add new ride.</p>';
+    header("Location: index.php");
   }
-
   $conn->close();
-  echo("</div>");
-  include_once "footer.php";
- ?>
+  exit;
+
+?>

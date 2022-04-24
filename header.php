@@ -98,6 +98,22 @@
           </ul>
         </div>
         </ul>
+
+        <ul>
+          <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#games-collapse" aria-expanded="false">
+          Carnival Games
+          </button>
+          <div class="collapse" id="games-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li><a href="ViewGames.php" class="link-dark rounded">View Games</a></li>
+              <?php //must be logged in to add or modify attractions 
+              if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true)
+                echo '<li><a href="NewGameForm.php" class="link-dark rounded">Add Games</a></li>
+                <li><a href="ModifyGames.php" class="link-dark rounded">Modify Games</a></li>';
+              ?>
+            </ul>
+          </div>
+        </ul>
       </div>
     </li>
 

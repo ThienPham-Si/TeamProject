@@ -2,9 +2,10 @@
   include_once 'header.php'; 
   include_once 'includes/dbh.inc.php';
   
-  echo '<div id="content" class="content">
-    <div class="items">';
-    echo "<table class='table'>
+  echo '<div id="content" class="content">';
+    echo "<div class='table-wrap'>
+    <table class='table table-striped table-hover table-responsive'>
+    <thead>
         <tr class='top'>
           <th class='tableHeader'>Rainout Date</th>
           <th class='tableHeader'>Closed Events</th>
@@ -12,7 +13,7 @@
           <th class='tableHeader'>Revenue Earned</th>";
           if(isset($_SESSION["role"]) && $_SESSION["role"]=='admin')
             echo "<th class='tableHeader'>Action</th>";
-        echo("</tr>");
+        echo("</tr></thead><tbody>");
       
       $display = "SELECT * 
                   FROM Theme_Park_Database.rainouts 
@@ -22,10 +23,10 @@
         $result = mysqli_query($conn, $display);
         if ($result) {
           while($row=mysqli_fetch_array($result)) {
-            echo "<tr class='tableRow'>";
-            echo('<td class="tableData">' . $row['date_of_rainout'] . '</td>');
-            echo('<td class="tableData">' . $row['number_of_cancelled_events'] . '</td>');
-            echo('<td class="tableData">' . $row['number_of_closed_rides'] . '</td>');
+            echo "<tr'>";
+            echo('<td>' . $row['date_of_rainout'] . '</td>');
+            echo('<td>' . $row['number_of_cancelled_events'] . '</td>');
+            echo('<td>' . $row['number_of_closed_rides'] . '</td>');
 
             $moneyFormat = $row['revenue_earned'];
             $commaLocation = strpos($row['revenue_earned'], ".") - 3;
@@ -33,10 +34,10 @@
               $moneyFormat = substr_replace($moneyFormat, ",", $commaLocation, 0);
               $commaLocation -= 3;
             }
-            echo('<td class="tableData"> $' . $moneyFormat . '</td>');
+            echo('<td> $' . $moneyFormat . '</td>');
 
             if(isset($_SESSION["role"]) && $_SESSION["role"]=='admin') {
-              echo ('<td class="tableData">
+              echo ('<td>
                 <form action="delete.php" method="POST" >
                   <input type="hidden" 
                     value="' . $row["date_of_rainout"]. '" 
@@ -48,6 +49,7 @@
                     value="rainouts" 
                     name="tableName" />
                   <input 
+                    class="btn btn-primary btn-block mb-4"
                     type="submit" 
                     name= "delete" 
                     value="Delete">
@@ -56,12 +58,12 @@
             }
             echo "</tr>";
           }
-          echo '</table>
+          echo '</tbody></table>
             </div>
           </div>';
         }
-      } catch (mysqli_sql_exception) {
-        echo '</table>
+      } catch (mysqli_sql_exception $e) {
+        echo '<tbody></table>
             </div>
           </div>';
         echo '<p class="items">Unable to display rainouts.</p>';

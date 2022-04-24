@@ -5,10 +5,10 @@
     $tableName = $_POST["tableName"];
     $idAttribute = $_POST["idAttributeName"];
     include_once "check.php";
-
+    
     if($canDelete) {
-      $deleteQuery = "UPDATE `Theme_Park_Database`.$tableName
-                  SET is_deleted=TRUE
+      $deleteQuery = "UPDATE `Theme_Park_Database`.$tableName 
+                  SET is_deleted=TRUE 
                   WHERE $idAttribute='$id'";
 
       try {
@@ -24,5 +24,5 @@
     } else {
       header("Location: index.php");
     }
-  }
+  }    
 ?>

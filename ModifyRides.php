@@ -225,15 +225,15 @@
           `location`='$location'
         WHERE `ride_id`=$id;";
   
-      if(mysqli_query($conn, $updateRow)) {
-        echo "Changes updated! View rides to see the change.";
-      } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+      try {
+        if(mysqli_query($conn, $updateRow)) {
+          echo "<p class='items'>Changes updated! View rides to see the change.</p>";
+        }
+      } catch (mysqli_sql_exception $e) {
+        echo "<p class='items'>Changes not updated - something went wrong!</p>";
       }
     }
-
   ?>
-
   </div>
 </div>
 
