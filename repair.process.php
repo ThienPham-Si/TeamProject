@@ -59,14 +59,12 @@
 
 
   try {
-      if (mysqli_query($conn, $sql)) {
-          echo "<p class='items'>New record created successfully! View or add more tickets through the menu!</p>";
-      }
+      if (mysqli_query($conn, $sql)) {;      }
   } catch (mysqli_sql_exception $e) {
-      echo '<p class="items">Unable to add this ticket.</p>';
+      ;
   }
 
-    header("Location: repair.php");
+  echo "<meta http-equiv='refresh' content='0;url=repair.php'>";
   }
 
   if(isset($_GET['delete'])){
@@ -79,7 +77,7 @@
     $_SESSION['message'] = 'Record has been deleted';
     $_SESSION['msg_type'] = 'danger';
 
-    header("location: repair.php");
+  echo "<meta http-equiv='refresh' content='0;url=repair.php'>";
   }
 
 if (isset($_POST['update'])) {
@@ -112,5 +110,5 @@ if (isset($_POST['update'])) {
   `ticket_status` = '$finished'
   WHERE `id` = $id;";
   mysqli_query($conn, $sql);
-	header('location: repair.php');
+  echo "<meta http-equiv='refresh' content='0;url=repair.php'>";
 }

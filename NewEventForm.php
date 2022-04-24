@@ -32,8 +32,8 @@ include_once "includes/dbh.inc.php"
         </label>
         <div class="col-8">
           <?php
-          $query = "SELECT employee_id, first_name, m_name, last_name 
-                        FROM `Theme_Park_Database`.`employees` 
+          $query = "SELECT employee_id, first_name, m_name, last_name
+                        FROM `Theme_Park_Database`.`employees`
                         WHERE `Theme_Park_Database`.`employees`.`employee_role`='Event Coordinator'
                         ORDER BY employee_id";
           if ($result = mysqli_query($conn, $query)) {
@@ -81,7 +81,7 @@ include_once "includes/dbh.inc.php"
           <div class="col-8">
             <?php
             $query = "SELECT location_id, location
-                        FROM `Theme_Park_Database`.`locations` 
+                        FROM `Theme_Park_Database`.`locations`
                         ORDER BY location_id";
             if ($result = mysqli_query($conn, $query)) {
               echo ('

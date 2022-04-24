@@ -13,7 +13,7 @@
             $escape = trim($_POST["description"]);
             $description = mysqli_real_escape_string($conn, $escape);
         }
-        $date = validate($_POST["date"]);
+        // $date = validate($_POST["date"]);
         $coordinator = validate($_POST["coordinator"]);
         $capacity = validate($_POST["capacity"]);
         $startTime = validate($_POST["startTime"]);
@@ -25,7 +25,6 @@
         (`event_name`,
         `event_description`,
         `event_coordinator`,
-        `event_date`,
         `capacity`,
         `start_time`,
         `end_time`,
@@ -33,12 +32,11 @@
     VALUES (
         '$name',
         '$description',
-        $coordinator,
-        '$date',
-        $capacity,
+        '$coordinator',
+        '$capacity',
         '$startTime',
         '$endTime',
-        $location
+        '$location'
     );";
 
     try {
