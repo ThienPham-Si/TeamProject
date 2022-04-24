@@ -24,7 +24,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       $_SESSION['message'] = 'Please log in first';
       $_SESSION['msg_type'] = 'danger';
-      header("Location: index.php");
+      echo "<meta http-equiv='refresh' content='0;url=login.php'>";
     }
 
 		$id = $_GET['edit'];
@@ -54,6 +54,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <?php
     if(isset($_SESSION['message'])): ?>
 
+    //show the message if edit or delete
     <div class="alert alert-<?=$_SESSION['msg_type']?>">
       <?php
         echo $_SESSION['message'];
@@ -61,8 +62,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
        ?>
     </div>
   <?php endif ?>
-    <form action="repair.process.php" method="post">
 
+    <form action="repair.process.php" method="post">
   <div class="form-group row">
     <input type="hidden" name="id" value="<?php echo $id; ?>">
 
@@ -129,9 +130,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   </div>
 
   <div class="form-check">
-  <input class="form-check-input" type="checkbox" name="finished"
-  <?php if($finished==true) echo " checked "?>
-  value="1"/>
+  <input class="form-check-input" type="checkbox" name="repair-finished"
+  <?php if($finished==true) echo " checked "?> value="1"/>
   <label class="form-check-label">
     Finished
   </label>

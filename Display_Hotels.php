@@ -205,3 +205,6 @@
 
 
 <?php mysqli_close($conn);?>
+<?php
+  include_once 'footer.php';
+ ?>

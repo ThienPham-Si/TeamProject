@@ -4,7 +4,7 @@ require_once "header.php";
 
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
   echo "<meta http-equiv='refresh' content='0;url=welcome.php'>";
-    exit;
+  exit;
 }
 
 $username = $password = "";
@@ -12,14 +12,14 @@ $username_err = $password_err = $login_err = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-    // Check if username is empty
+    // if username is empty
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter username.";
     } else{
         $username = trim($_POST["username"]);
     }
 
-    // Check if password is empty
+    // if password is empty
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter your password.";
     } else{
@@ -29,7 +29,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         $sql = "SELECT id, username, password, role FROM user_login WHERE username = ?";
-
         if($stmt = mysqli_prepare($conn, $sql)){
             mysqli_stmt_bind_param($stmt, "s", $param_username);
             $param_username = $username;
@@ -53,7 +52,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     $login_err = "Invalid username or password.";
                 }
             } else{
-                echo "Oops! Something went wrong. Please try again later.";
+                echo "Something went wrong.";
             }
 
             mysqli_stmt_close($stmt);
@@ -68,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <?php
         if(!empty($login_err)){
-            echo '<div class="alert alert-danger">' . $login_err . '</div>';
+            echo '<div class="alert alert-danger">'.$login_err.'</div>';
         }
         ?>
 

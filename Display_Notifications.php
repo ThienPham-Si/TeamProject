@@ -29,7 +29,7 @@
                         }
                         else
                         {
-                            $description = 'Event: ' . $data['event_or_maintenance_number'] . ' updated: ' . $data['description'];
+                            $description = 'Event ' . $data['event_or_maintenance_number'] . ' updated: ' . $data['description'];
                         }
                     ?>
                     <tr>
@@ -55,10 +55,12 @@
             </tbody>
             <tfoot>
             <tr>
+            <form action = '' method = 'POST'>
+            <td valign = "bottom" align = "left">
             <button id = "subButton">
-                <td valign = "bottom" align = "left">
-                <input type = "submit" name = "update" value = "Clear Notifications"/>
+                <input type = "submit" name = "update" value = "Clear Notifications">
             </button>
+            </form>
                 </tr>
                 </tfoot>
             </table>
@@ -75,6 +77,7 @@ if(isset($_POST['update']))
     $result = $conn -> query($query);
     if($result == true)
     {
+        echo "<meta http-equiv='refresh' content = '0'>";
         //echo '<script> alert("Notifications cleared")</script>';
     }
     else
@@ -82,6 +85,8 @@ if(isset($_POST['update']))
         //echo '<script> alert("Error clearing notifications")</script>';
     }
 }
+
+
 include_once 'footer.php';
 
 ?>

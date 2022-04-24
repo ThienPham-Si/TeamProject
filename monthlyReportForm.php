@@ -83,7 +83,7 @@
                 //top 3 rides
                 $query = "SELECT ride_name, times_ran,month_year
                 FROM rides, ride_stats
-                WHERE month_year <= '$two'
+                WHERE month_year <= '$two' AND month_year >= '$one'
                 AND rides.ride_id = ride_stats.ride_id
                 ORDER BY times_ran DESC
                 LIMIT 3";

@@ -1,6 +1,6 @@
 
 <?php
-    include_once 'header2.php';
+    include_once 'header.php';
     include('includes/dbh.inc.php');
     echo('<div id="content" class="content">');
 
