@@ -1,4 +1,6 @@
-<?php include_once "header.php"; ?>
+<?php
+  include_once "includes/dbh.inc.php";
+  include_once "header.php"; ?>
   <div id="content" class="content">
       <div class="items">
         <!--safe command, complete validation and submission in this page: action="lessthanchar?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"-->
@@ -75,13 +77,34 @@
           </div>
 
           <div class="form-group row">
-          <label class="col-4 col-form-label">Location:</label>
-          <div class="col-8"><input type="text" name="location" pattern="[a-zA-Z\d\-\s]+" 
-                                    class="form-control" required></div>
+          <label class="col-4 col-form-label">
+            Ride Location:
+          </label>
+          <div class="col-8">
+            <?php
+            $query = "SELECT location_id, location
+                        FROM `Theme_Park_Database`.`locations` 
+                        ORDER BY location_id";
+            try {
+              if ($result = mysqli_query($conn, $query)) {
+                echo ('
+                    <select id="select" name="location" required>
+                    <option value="" disabled selected>--select--</option>
+                  ');
+                while ($row = mysqli_fetch_array($result)) {
+                  echo
+                  '<option value="' . $row['location'] . '">' . $row['location'] . '</option>';
+                }
+                echo '</select>';
+              }
+            } catch(mysqli_sql_exception $e) {
+              echo '<p class="items">Unable to find ride locations, please try again later.</p>';
+            }
+            ?>
           </div>
-
-          <input type="submit">
-        </form>
-      </div>
+        </div>
+        <input type="submit">
+      </form>
     </div>
+  </div>
 <?php include_once "footer.php"; ?>
