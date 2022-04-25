@@ -8,7 +8,7 @@
   <p>Enter the carnival game to modify: </p>
   <form method="POST" action="">
     <?php 
-      $query = "SELECT id, carnival_name FROM `Theme_Park_Database`.`carnival_games` ORDER BY id";
+      $query = "SELECT id, carnival_name FROM `Theme_Park_Database`.`carnival_games` WHERE is_deleted=FALSE ORDER BY id";
       if($result = mysqli_query($conn, $query)) {
         echo '<select id="select" name="game_selected" class="custom-select" onchange="this.form.submit()">
         <option value="" disabled selected>--select--</option>';
@@ -122,10 +122,10 @@
               if ($locResult = mysqli_query($conn, $getLocations)) {
                 echo ('<select id="select" name="location" required>');
                 while ($fetchedLocations = mysqli_fetch_array($locResult)) {
-                  echo '<option value="' . $fetchedLocations['location'];
+                  echo '<option value="' . $fetchedLocations['location'] . '"';
                   if($fetchedLocations['location'] == $row['carnival_location'])
                     echo ' selected';
-                  echo '">' . $fetchedLocations['location'] . '</option>';
+                  echo '>' . $fetchedLocations['location'] . '</option>';
                 }
                 echo '</select>';
               }
